@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Topic, Letter, Product, Content
 
-# Register your models here.
+admin.site.register(Topic, Letter, Product, Content)
+
+
