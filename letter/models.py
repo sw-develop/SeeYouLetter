@@ -48,4 +48,4 @@ class Content(models.Model):
         db_table = 'Contents'
         verbose_name = 'Content'
         verbose_name_plural = 'Contents'
-        ordering = ['id']  # 오름차순 정렬
+
