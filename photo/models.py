@@ -1,3 +1,9 @@
 from django.db import models
+from letter.models import Letter
 
-# Create your models here.
+class Photo(models.Model):
+    letter = models.ForeignKey(Letter, on_delete=models.CASCADE, related_name='user_photos')
+    photo = models.ImageField(upload_to='photos/%Y/%m/%d', default='photos/no_image.png')
+
+
+
