@@ -22,11 +22,11 @@ class Topic(models.Model):
 
 class Letter(models.Model):
     #fk
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name = 'letter_paper')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='letter_paper')
     #receiver -> me, others 둘 중 한 개 선택하는 거로도 가능? or 안해도?
     receiver = models.CharField(max_length=10)
     #font -> 여러 개 중 한 개 선택하는거로
-    topic = models.ManyToManyField(Topic)
+    topic = models.ManyToManyField(Topic, blank=True)
 
 
     class Meta:
