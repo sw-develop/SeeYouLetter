@@ -11,14 +11,6 @@ class Product(models.Model):
         verbose_name_plural = 'Products'
         ordering = ['id'] #오름차순 정렬
 
-class Topic(models.Model):
-    content = models.CharField(max_length = 100)
-
-    class Meta:
-        db_table = 'Topics'
-        verbose_name = 'Topic'
-        verbose_name_plural = 'Topics'
-        ordering = ['id']  # 오름차순 정렬
 
 class Letter(models.Model):
     #fk
@@ -40,7 +32,6 @@ class Letter(models.Model):
     #receiver -> me, others 둘 중 한 개 선택하는 거로도 가능? or 안해도?
     receiver = models.CharField(max_length=10)
     #font -> 여러 개 중 한 개 선택하는거로
-    topic = models.ManyToManyField(Topic, blank=True)
 
 
     class Meta:
