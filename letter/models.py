@@ -23,6 +23,17 @@ class Topic(models.Model):
 class Letter(models.Model):
     #fk
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='letter_paper')
+    #받는 월 정하기
+    DATE_OF_RECEIVE_LETTER = [
+        ('3', 'March'),
+        ('6', 'June'),
+        ('12', 'December'),
+    ]
+    date = models.CharField(
+        max_length=2,
+        choices=DATE_OF_RECEIVE_LETTER,
+        default='3',
+    )
     #receiver -> me, others 둘 중 한 개 선택하는 거로도 가능? or 안해도?
     receiver = models.CharField(max_length=10)
     #font -> 여러 개 중 한 개 선택하는거로
