@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product, Letter, Content
+from .models import Product, Letter
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,7 +11,3 @@ class LetterSerializer(serializers.ModelSerializer):
         model = Letter
         fields = ['id', 'product', 'date']
 
-class ContentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Content
-        fields = ['letter', 'sender', 'receiver', 'letter_content', 'page']
