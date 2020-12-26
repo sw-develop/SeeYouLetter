@@ -29,8 +29,6 @@ class Letter(models.Model):
         choices=DATE_OF_RECEIVE_LETTER,
         default=MARCH,
     )
-    #receiver -> me, others 둘 중 한 개 선택하는 거로도 가능? or 안해도?
-    receiver = models.CharField(max_length=10)
     #font -> 여러 개 중 한 개 선택하는거로
 
 
