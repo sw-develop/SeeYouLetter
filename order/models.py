@@ -4,7 +4,6 @@ from letter.models import Letter
 class Customer(models.Model):
     letter = models.OneToOneField(Letter, on_delete=models.CASCADE, primary_key=True)
     sender = models.CharField(max_length=30)
-    sender_phone_number = models.CharField(max_length=14)
     #이메일 -> 형식 체크 가능
     email = models.EmailField(
         verbose_name='email',
