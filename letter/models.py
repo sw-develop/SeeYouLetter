@@ -15,6 +15,7 @@ class Product(models.Model):
 class Letter(models.Model):
     #fk
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='letter_paper')
+    sender_phone_number = models.CharField(max_length=14)
     #받는 월 정하기
     MARCH = '3'
     JUNE = '6'
@@ -30,25 +31,13 @@ class Letter(models.Model):
         default=MARCH,
     )
     #font -> 여러 개 중 한 개 선택하는거로
-
-
-    class Meta:
-        db_table = 'letters'
-        verbose_name = 'Letter'
-        verbose_name_plural = 'Letters'
-        ordering = ['id']  # 오름차순 정렬
-
-
-
-class Content(models.Model):
-    letter = models.OneToOneField(Letter, on_delete=models.CASCADE, primary_key=True)
     sender = models.CharField(max_length=100)
     receiver = models.CharField(max_length=100)
     letter_content = models.TextField() #편지 본문 작성 글자 수 확인
     page = models.IntegerField()
 
     class Meta:
-        db_table = 'Contents'
-        verbose_name = 'Content'
-        verbose_name_plural = 'Contents'
-
+        db_table = 'letters'
+        verbose_name = 'Letter'
+        verbose_name_plural = 'Letters'
+        ordering = ['id']  # 오름차순 정렬
