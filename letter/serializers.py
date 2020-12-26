@@ -9,5 +9,5 @@ class ProductSerializer(serializers.ModelSerializer):
 class LetterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Letter
-        fields = ['id', 'product', 'date']
+        fields = ['id', 'product', 'sender_phone_number', 'date', 'sender', 'receiver', 'letter_content', 'page']
 
