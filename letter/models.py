@@ -46,7 +46,7 @@ class Content(models.Model):
     letter = models.OneToOneField(Letter, on_delete=models.CASCADE, primary_key=True)
     sender = models.CharField(max_length=100)
     receiver = models.CharField(max_length=100)
-    letter_content = models.CharField(max_length=100) #편지 본문 작성 글자 수 확인
+    letter_content = models.TextField() #편지 본문 작성 글자 수 확인
     page = models.IntegerField()
 
     class Meta:
