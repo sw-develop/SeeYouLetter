@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'letter.apps.LetterConfig',
     'photo',
     'order',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
