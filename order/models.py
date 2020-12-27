@@ -3,13 +3,6 @@ from letter.models import Letter
 
 class Customer(models.Model):
     letter = models.OneToOneField(Letter, on_delete=models.CASCADE, primary_key=True)
-    sender = models.CharField(max_length=30)
-    #이메일 -> 형식 체크 가능
-    email = models.EmailField(
-        verbose_name='email',
-        max_length=255,
-    )
-    sender_addr = models.CharField(max_length=30) #우편번호랑 상세주소 다같이 저장되는건가?
     receiver = models.CharField(max_length=30)
     receiver_phone_number = models.CharField(max_length=14)
     receiver_addr = models.CharField(max_length=30)
