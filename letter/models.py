@@ -15,7 +15,15 @@ class Product(models.Model):
 class Letter(models.Model):
     #fk
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='letter_paper')
+    sender = models.CharField(max_length=30)
     sender_phone_number = models.CharField(max_length=14)
+    #이메일 -> 형식 체크 가능
+    email = models.EmailField(
+        verbose_name='email',
+        max_length=255,
+    )
+    sender_addr = models.CharField(max_length=30) #우편번호랑 상세주소 다같이 저장되는건가?
+
     #받는 월 정하기
     MARCH = '3'
     JUNE = '6'
