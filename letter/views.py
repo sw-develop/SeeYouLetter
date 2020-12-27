@@ -25,7 +25,7 @@ class ProductList(APIView):
 
 class ProductDetail(APIView):
     """
-    Retrieve, update or delete a Letter instance
+    Retrieve, update or delete a Product instance
     """
     def get_object(self, pk):
         try:
@@ -35,7 +35,7 @@ class ProductDetail(APIView):
 
     def get(self, request, pk, format=None):
         product = self.get_object(pk)
-        serializer = LetterSerializer(product)
+        serializer = ProductSerializer(product)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
@@ -60,6 +60,7 @@ class LetterList(APIView):
         serializer = LetterSerializer(letters, many=True)
         return Response(serializer.data)
 
+    #사용자 식별 처리 HOW..?
     def post(self, request, format=None):
         serializer = LetterSerializer(data=request.data)
         if serializer.is_valid():
