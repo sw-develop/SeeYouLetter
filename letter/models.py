@@ -11,19 +11,20 @@ class Product(models.Model):
         verbose_name_plural = 'Products'
         ordering = ['id'] #오름차순 정렬
 
-
-class Letter(models.Model):
-    #fk
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='letter_paper')
-    sender = models.CharField(max_length=30)
-    sender_phone_number = models.CharField(max_length=14)
+class User(models.Model):
+    name = models.CharField(max_length=30)
     #이메일 -> 형식 체크 가능
     email = models.EmailField(
         verbose_name='email',
         max_length=255,
     )
+    sender_phone_number = models.CharField(max_length=14)
     sender_addr = models.CharField(max_length=30) #우편번호랑 상세주소 다같이 저장되는건가?
 
+class Letter(models.Model):
+    #fk
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='letter_sender')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='letter_paper')
     #받는 월 정하기
     MARCH = '3'
     JUNE = '6'
