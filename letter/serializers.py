@@ -1,13 +1,18 @@
 from rest_framework import serializers
-from .models import Product, Letter
+from .models import Product, Letter, User
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['id', 'name', 'price']
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'name', 'email', 'sender_phone_number', 'sender_addr']
+
 class LetterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Letter
-        fields = ['id', 'product', 'sender_phone_number', 'date', 'sender', 'receiver', 'letter_content', 'page']
+        fields = ['id', 'product', 'user', 'date', 'sender', 'receiver', 'letter_content', 'page']
 
