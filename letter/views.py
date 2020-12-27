@@ -16,11 +16,21 @@ class ProductList(APIView):
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
+    """
+    test cookie
+    """
     def post(self, request, format=None):
         serializer = ProductSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            """
+            Add code
+            """
+            value = request.data.get("name")
+            item = Product.objects.get(name=value)  # 현재 저장된 객체의 id 값을 가진 Product 객체 저장하고 싶은데!!!
+            response = Response(serializer.data, status=status.HTTP_201_CREATED)
+            response.set_cookie('userID', item.name)
+            return response
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 class ProductDetail(APIView):
@@ -105,7 +115,6 @@ class LetterList(APIView):
         serializer = LetterSerializer(letters, many=True)
         return Response(serializer.data)
 
-    #사용자 식별 처리 HOW..?
     def post(self, request, format=None):
         serializer = LetterSerializer(data=request.data)
         if serializer.is_valid():
