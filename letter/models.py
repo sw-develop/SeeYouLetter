@@ -12,14 +12,19 @@ class Product(models.Model):
         ordering = ['id'] #오름차순 정렬
 
 class User(models.Model):
-    name = models.CharField(max_length=30)
+    senderName = models.CharField(max_length=30)
     #이메일 -> 형식 체크 가능
-    email = models.EmailField(
+    senderEmail = models.EmailField(
         verbose_name='email',
         max_length=255,
     )
-    sender_phone_number = models.CharField(max_length=14)
-    sender_addr = models.CharField(max_length=30) #우편번호랑 상세주소 다같이 저장되는건가?
+    senderPhone = models.CharField(max_length=14)
+
+    class Meta:
+        db_table = 'users'
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
+        ordering = ['id'] #오름차순 정렬
 
 class Letter(models.Model):
     #fk
