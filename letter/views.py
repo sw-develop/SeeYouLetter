@@ -5,6 +5,7 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 class ProductList(APIView):
@@ -16,21 +17,11 @@ class ProductList(APIView):
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
-    """
-    test cookie
-    """
     def post(self, request, format=None):
         serializer = ProductSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            """
-            Add code
-            """
-            value = request.data.get("name")
-            item = Product.objects.get(name=value)  # 현재 저장된 객체의 id 값을 가진 Product 객체 저장하고 싶은데!!!
-            response = Response(serializer.data, status=status.HTTP_201_CREATED)
-            response.set_cookie('userID', item.name)
-            return response
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 class ProductDetail(APIView):
@@ -73,9 +64,25 @@ class UserList(APIView):
     #post 요청 시 cookie 설정 추가 해줘야함!
     def post(self, request, format=None):
         serializer = UserSerializer(data=request.data)
+
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            #동일 값을 가진 사람은 동일 인물로 간주 할 것인가?
+            if request.COOKIES.get('userID') is not None: #쿠키 값이 있을 때
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+            else: #쿠키 값이 없을 때
+                #처음 사용하는 유저인지 구분
+                try:
+                    value = request.data.get("senderEmail")
+                    item = User.objects.get(senderEmail=value)
+                except ObjectDoesNotExist: #처음 사용하는 유저일 때
+                    serializer.save()
+                    item = User.objects.get(senderEmail=value)
+                response = Response(serializer.data, status=status.HTTP_201_CREATED)
+                c_val = str(item.id)
+                response.set_cookie('userID', c_val)
+                return response
+
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 class UserDetail(APIView):
