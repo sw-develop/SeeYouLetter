@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Customer, Order
+from letter.models import Letter, Product
 from .serializers import CustomerSerializer, OrderSerializer
 from django.http import Http404
 from rest_framework.views import APIView
@@ -21,6 +22,21 @@ class CustomerList(APIView):
         serializer = CustomerSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            customerObj = Customer.objects.get(pk=request.data.get('letter'))
+            letterObj = Letter.objects.get(pk=request.data.get('letter'))
+            prodObj = Product.objects.get(pk=letterObj.product)
+            price = customerObj.price_of_mail()
+            order = Order(
+                letter=request.data.get('letter'),
+                letterName=prodObj.name,
+                letterPrice=prodObj.price,
+                letterPage_count=letterObj.page,
+                photo_price=0,
+                send_mail=customerObj.send_mail,
+                total_price=prodObj.price + letterObj.page * 1000 + price
+            )
+            order.save()
+            serializer = OrderSerializer(Order.objects.get(pk=request.data.get('letter')))
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
@@ -52,6 +68,23 @@ class CustomerDetail(APIView):
         customer.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class OrderList(APIView):
+    """
+    List all Order or create a new Order
+    """
+    def get(self, request, format=None):
+        orders = Order.objects.all()
+        serializer = OrderSerializer(orders, many=True)
+        return Response(serializer.data)
+
+    #수정할 것) post 요청 시 Order 객체 생성도 처리해줘야 함
+    def post(self, request, format=None):
+        serializer = OrderSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
 class OrderDetail(APIView):
     """
     Retrieve, update or delete a Order instance
@@ -66,3 +99,8 @@ class OrderDetail(APIView):
         order = self.get_object(pk)
         serializer = OrderSerializer(order)
         return Response(serializer.data)
+
+    def delete(self, request, pk, format=None):
+        order = self.get_object(pk)
+        order.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
