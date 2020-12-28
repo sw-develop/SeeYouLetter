@@ -35,7 +35,7 @@ class Customer(models.Model):
         verbose_name_plural = 'Customers'
 
 class Order(models.Model):
-    letter = models.OneToOneField(Letter, on_delete=models.CASCADE, primary_key=True)
+    customer = models.OneToOneField(Customer, on_delete=models.CASCADE, primary_key=True)
     letterName = models.CharField(max_length=100)
     letterPrice = models.IntegerField()
     letterPage_count = models.IntegerField()
