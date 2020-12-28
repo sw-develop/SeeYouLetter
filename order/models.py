@@ -5,14 +5,14 @@ class Customer(models.Model):
     letter = models.OneToOneField(Letter, on_delete=models.CASCADE, primary_key=True)
     senderName = models.CharField(max_length=30)
     senderPhone = models.CharField(max_length=14)
-    sender_addr = models.CharField(max_length=30)  # 우편번호랑 상세주소 다같이 저장되는건가?
+    senderAddr = models.CharField(max_length=30)  # 우편번호랑 상세주소 다같이 저장되는건가?
     receiver = models.CharField(max_length=30)
-    receiver_phone_number = models.CharField(max_length=14)
-    receiver_addr = models.CharField(max_length=30)
+    receiverPhone = models.CharField(max_length=14)
+    receiverAddr = models.CharField(max_length=30)
     #우편방법
     MODE_OF_SEND_MAIL = [
-        ('regular_mail', '일반우편'),
-        ('registered_mail', '등기우편'),
+        ('regular', '일반우편'),
+        ('registered', '등기우편'),
     ]
     send_mail = models.CharField(
         max_length=20,
@@ -35,8 +35,13 @@ class Customer(models.Model):
         verbose_name_plural = 'Customers'
 
 class Order(models.Model):
-    customer = models.OneToOneField(Customer, on_delete=models.CASCADE, primary_key=True)
-    price = models.IntegerField()
+    letter = models.OneToOneField(Letter, on_delete=models.CASCADE, primary_key=True)
+    letterName = models.CharField(max_length=100)
+    letterPrice = models.IntegerField()
+    letterPage_count = models.IntegerField()
+    photo_price = models.IntegerField()
+    send_mail = models.CharField(max_length=20, default='regular')
+    total_price = models.IntegerField()
 
     class Meta:
         db_table = 'orders'
