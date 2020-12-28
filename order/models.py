@@ -23,6 +23,12 @@ class Customer(models.Model):
     #개인정보동의
     #환불정책동의
 
+    def price_of_mail(self):
+        price = 0
+        if self.send_mail is 'registered_mail':
+            price += 1000
+        return price
+
     class Meta:
         db_table = 'customers'
         verbose_name = 'Customer'
