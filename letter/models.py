@@ -12,13 +12,11 @@ class Product(models.Model):
         ordering = ['id'] #오름차순 정렬
 
 class User(models.Model):
-    senderName = models.CharField(max_length=30)
     #이메일 -> 형식 체크 가능
     senderEmail = models.EmailField(
         verbose_name='email',
         max_length=255,
     )
-    senderPhone = models.CharField(max_length=14)
 
     class Meta:
         db_table = 'users'
