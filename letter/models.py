@@ -48,6 +48,10 @@ class Letter(models.Model):
     letter_content = models.TextField() #편지 본문 작성 글자 수 확인
     page = models.IntegerField()
 
+    def price_of_letter(self):
+        price = self.product.price
+        return price
+
     class Meta:
         db_table = 'letters'
         verbose_name = 'Letter'
