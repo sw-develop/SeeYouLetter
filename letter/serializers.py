@@ -16,5 +16,5 @@ class LetterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Letter
-        fields = ['id', 'product', 'user', 'date', 'sender', 'receiver', 'letter_content', 'page']
+        fields = ['id', 'product', 'user', 'date', 'letter_content', 'page']
 
