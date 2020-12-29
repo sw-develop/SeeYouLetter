@@ -66,6 +66,7 @@ class UserList(APIView):
         serializer = UserSerializer(data=request.data)
 
         if serializer.is_valid():
+            """
             #동일 값을 가진 사람은 동일 인물로 간주 할 것인가?
             if request.COOKIES.get('userID') is not None: #쿠키 값이 있을 때
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -82,7 +83,17 @@ class UserList(APIView):
                 c_val = str(item.id)
                 response.set_cookie('userID', c_val)
                 return response
-
+            """
+            try:
+                value = request.data.get("senderEmail")
+                item = User.objects.get(senderEmail=value)
+            except ObjectDoesNotExist:  # 처음 사용하는 유저일 때
+                serializer.save()
+                item = User.objects.get(senderEmail=value)
+            response = Response(serializer.data, status=status.HTTP_201_CREATED)
+            c_val = str(item.id)
+            response.set_cookie('userID', c_val)
+            return response
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 class UserDetail(APIView):
