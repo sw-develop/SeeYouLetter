@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from .models import Photo
+from letter.models import Letter
 from .serializers import PhotoSerializer
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.db import transaction
 
 # Create your views here.
 class PhotoList(APIView):
@@ -16,10 +18,14 @@ class PhotoList(APIView):
         serializer = PhotoSerializer(photos, many=True)
         return Response(serializer.data)
 
+    #사진 추가 시 photo_price 업데이트
     def post(self, request, format=None):
         serializer = PhotoSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            with transaction.atomic():
+                letterObj=Letter.objects.get(pk=request.data.get('letter'))
+                letterObj.photo_price += 1000
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
