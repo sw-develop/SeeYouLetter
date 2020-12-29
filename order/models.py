@@ -25,7 +25,7 @@ class Customer(models.Model):
 
     def price_of_mail(self):
         price = 0
-        if self.send_mail is 'registered':
+        if self.send_mail == 'registered':
             price += 1000
         return price
 
