@@ -84,6 +84,8 @@ class UserList(APIView):
                 response.set_cookie('userID', c_val)
                 return response
             """
+            #여기 밑 부분 주석 제거하면 됨
+
             try:
                 value = request.data.get("senderEmail")
                 item = User.objects.get(senderEmail=value)
@@ -91,9 +93,14 @@ class UserList(APIView):
                 serializer.save()
                 item = User.objects.get(senderEmail=value)
             response = Response(serializer.data, status=status.HTTP_201_CREATED)
-            c_val = str(item.id)
-            response.set_cookie('userID', c_val)
+            #c_val = str(item.id)
+            #response.set_cookie('userID', c_val)
             return response
+
+            """
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            """
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 class UserDetail(APIView):
@@ -164,6 +171,9 @@ class LetterDetail(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+    def delete(self, request, pk, format=None):
+        letter = self.get_object(pk)
+        letter.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
