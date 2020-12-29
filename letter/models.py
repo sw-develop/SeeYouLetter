@@ -43,8 +43,6 @@ class Letter(models.Model):
         default=MARCH,
     )
     #font -> 여러 개 중 한 개 선택하는거로
-    sender = models.CharField(max_length=100)
-    receiver = models.CharField(max_length=100)
     letter_content = models.TextField() #편지 본문 작성 글자 수 확인
     page = models.IntegerField()
 
