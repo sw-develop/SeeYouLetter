@@ -34,7 +34,7 @@ class CustomerList(APIView):
                     letterName=prodObj.name,
                     letterPrice=prodObj.price,
                     letterPage_count=letterObj.page,
-                    photo_price=0,
+                    photo_price=letterObj.photo_price,
                     send_mail=customerObj.send_mail,
                     total_price=letter_price+mail_price #최종가격
                 )
