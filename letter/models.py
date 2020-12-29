@@ -50,6 +50,7 @@ class Letter(models.Model):
     #font -> 여러 개 중 한 개 선택하는거로
     letter_content = models.TextField() #편지 본문 작성 글자 수 확인
     page = models.IntegerField()
+    photo_price = models.IntegerField(default=0, null=True)
 
     def price_of_letter(self):
         price = self.product.price
