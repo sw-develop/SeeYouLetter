@@ -26,6 +26,7 @@ class PhotoList(APIView):
             with transaction.atomic():
                 letterObj=Letter.objects.get(pk=request.data.get('letter'))
                 letterObj.photo_price += 1000
+                letterObj.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
