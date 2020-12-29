@@ -7,12 +7,12 @@ class CustomerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ['letter', 'senderName', 'senderPhone', 'sender_addr', 'receiver', 'receiver_phone_number', 'receiver_addr', 'send_mail']
+        fields = ['letter', 'senderName', 'senderPhone', 'senderAddr', 'receiver', 'receiverPhone', 'receiverAddr', 'send_mail']
 
 class OrderSerializer(serializers.ModelSerializer):
     #customer = CustomerSerializer(read_only=True)
 
     class Meta:
         model = Order
-        fields = ['customer', 'price']
+        fields = ['customer', 'letterName', 'letterPrice', 'letterPage_count', 'photo_price', 'send_mail', 'total_price']
 
