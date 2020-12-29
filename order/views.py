@@ -27,7 +27,8 @@ class CustomerList(APIView):
                 customerObj = Customer.objects.get(pk=request.data.get('letter'))
                 letterObj = Letter.objects.get(pk=request.data.get('letter'))
                 prodObj = Product.objects.get(pk=letterObj.product.id)
-                price = customerObj.price_of_mail() #등기우편 시 1000원 추가
+                letter_price = letterObj.price_of_letter()
+                mail_price = customerObj.price_of_mail() #등기우편 시 1000원 추가
                 order = Order(
                     customer=customerObj,
                     letterName=prodObj.name,
@@ -35,7 +36,7 @@ class CustomerList(APIView):
                     letterPage_count=letterObj.page,
                     photo_price=0,
                     send_mail=customerObj.send_mail,
-                    total_price=prodObj.price + letterObj.page * 1000 + price #최종가격
+                    total_price=letter_price+mail_price #최종가격
                 )
                 order.save()
             serializer = OrderSerializer(Order.objects.get(pk=request.data.get('letter')))
