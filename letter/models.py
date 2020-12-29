@@ -1,4 +1,9 @@
+import os
+
 from django.db import models
+
+from mysite import settings
+
 
 class Product(models.Model):
     #편지지 이미지
@@ -50,6 +55,12 @@ class Letter(models.Model):
         price = self.product.price
         return price
 
+    """
+    def delete(self, *args, **kargs):
+        if self.upload_files:
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.upload_files.path))
+        super(Letter, self).delete(*args, **kargs)
+    """
     class Meta:
         db_table = 'letters'
         verbose_name = 'Letter'
