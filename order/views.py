@@ -6,6 +6,7 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.db import transaction
 
 # Create your views here.
 class CustomerList(APIView):
@@ -17,25 +18,26 @@ class CustomerList(APIView):
         serializer = CustomerSerializer(customers, many=True)
         return Response(serializer.data)
 
-    #수정할 것) post 요청 시 Order 객체 생성도 처리해줘야 함
+    #Customer 생성 시 Order 동시에 생성 처리
     def post(self, request, format=None):
         serializer = CustomerSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            customerObj = Customer.objects.get(pk=request.data.get('letter'))
-            letterObj = Letter.objects.get(pk=request.data.get('letter'))
-            prodObj = Product.objects.get(pk=letterObj.product)
-            price = customerObj.price_of_mail()
-            order = Order(
-                letter=request.data.get('letter'),
-                letterName=prodObj.name,
-                letterPrice=prodObj.price,
-                letterPage_count=letterObj.page,
-                photo_price=0,
-                send_mail=customerObj.send_mail,
-                total_price=prodObj.price + letterObj.page * 1000 + price
-            )
-            order.save()
+            with transaction.atomic():
+                customerObj = Customer.objects.get(pk=request.data.get('letter'))
+                letterObj = Letter.objects.get(pk=request.data.get('letter'))
+                prodObj = Product.objects.get(pk=letterObj.product.id)
+                price = customerObj.price_of_mail() #등기우편 시 1000원 추가
+                order = Order(
+                    customer=customerObj,
+                    letterName=prodObj.name,
+                    letterPrice=prodObj.price,
+                    letterPage_count=letterObj.page,
+                    photo_price=0,
+                    send_mail=customerObj.send_mail,
+                    total_price=prodObj.price + letterObj.page * 1000 + price #최종가격
+                )
+                order.save()
             serializer = OrderSerializer(Order.objects.get(pk=request.data.get('letter')))
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
