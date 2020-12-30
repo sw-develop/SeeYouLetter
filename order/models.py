@@ -42,6 +42,7 @@ class Order(models.Model):
     photo_price = models.IntegerField(null=True, default=0)
     send_mail = models.CharField(max_length=20, default='regular')
     total_price = models.IntegerField()
+    created_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = 'orders'
