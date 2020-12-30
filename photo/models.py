@@ -10,7 +10,8 @@ class Photo(models.Model):
     photo = models.ImageField(upload_to='photos/%Y/%m/%d', default='photos/no_image.png')
 
     def delete(self, *args, **kargs):
-        os.remove(os.path.join(settings.MEDIA_ROOT), self.photo.name)
+        if self.photo:
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.photo.path))
         super(Photo, self).delete(*args, **kargs)
 
     class Meta:
