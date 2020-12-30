@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from .models import Product, Letter, User
+from photo.models import Photo
 from .serializers import ProductSerializer, LetterSerializer, UserSerializer
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import transaction
 
 # Create your views here.
 class ProductList(APIView):
@@ -173,6 +175,9 @@ class LetterDetail(APIView):
 
     def delete(self, request, pk, format=None):
         letter = self.get_object(pk)
+        with transaction.atomic():
+            photo = Photo.Objects.get(letter=letter)
+            photo.delete()
         letter.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
