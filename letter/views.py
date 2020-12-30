@@ -93,8 +93,8 @@ class UserList(APIView):
                 serializer.save()
                 item = User.objects.get(senderEmail=value)
             response = Response(serializer.data, status=status.HTTP_201_CREATED)
-            #c_val = str(item.id)
-            #response.set_cookie('userID', c_val)
+            c_val = str(item.id)
+            response.set_cookie('userID', c_val)
             return response
 
             """
