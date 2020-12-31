@@ -175,9 +175,11 @@ class LetterDetail(APIView):
 
     def delete(self, request, pk, format=None):
         letter = self.get_object(pk)
+        photos = Photo.objects.filter(letter=letter)
+        for p in photos:
+            p.delete()
         with transaction.atomic():
-            Photo.objects.filter(letter=letter).delete()
-        letter.delete()
+            letter.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
