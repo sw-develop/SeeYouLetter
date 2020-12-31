@@ -55,5 +55,9 @@ class PhotoDetail(APIView):
 
     def delete(self, request, pk, format=None):
         photo = self.get_object(pk)
+        with transaction.atomic():
+            letterObj = Letter.objects.get(pk=photo.letter.id)
+            letterObj.photo_price -= 1000
+            letterObj.save()
         photo.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
