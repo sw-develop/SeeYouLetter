@@ -32,7 +32,7 @@ class User(models.Model):
 class Letter(models.Model):
     #fk
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='letter_sender')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='letter_paper')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='letter_paper', null=True)
     #받는 월 정하기
     MARCH = '3'
     JUNE = '6'
@@ -48,20 +48,14 @@ class Letter(models.Model):
         default=MARCH,
     )
     #font -> 여러 개 중 한 개 선택하는거로
-    letter_content = models.TextField() #편지 본문 작성 글자 수 확인
-    page = models.IntegerField()
+    letter_content = models.TextField(blank=True) #편지 본문 작성 글자 수 확인
+    page = models.IntegerField(default=0, null=True)
     photo_price = models.IntegerField(default=0, null=True)
 
     def price_of_letter(self):
         price = self.product.price + self.page*1000 + self.photo_price
         return price
 
-    """
-    def delete(self, *args, **kargs):
-        if self.upload_files:
-            os.remove(os.path.join(settings.MEDIA_ROOT, self.upload_files.path))
-        super(Letter, self).delete(*args, **kargs)
-    """
     class Meta:
         db_table = 'letters'
         verbose_name = 'Letter'
