@@ -21,4 +21,4 @@ class LetterSerializer(serializers.ModelSerializer):
 class TopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Topic
-        field = ['id', 'content']
+        fields = ['id', 'content']
