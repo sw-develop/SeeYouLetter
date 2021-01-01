@@ -18,3 +18,7 @@ class LetterSerializer(serializers.ModelSerializer):
         model = Letter
         fields = ['id', 'product', 'user', 'topics', 'date', 'letter_content', 'page', 'photo_price']
 
+class TopicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Topic
+        field = ['id', 'content']
