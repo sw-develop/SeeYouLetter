@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Letter, Product, User
+from .models import Letter, Product, User, Topic
 
 admin.site.register(Letter)
 admin.site.register(Product)
 admin.site.register(User)
-
+admin.site.register(Topic)
 
