@@ -32,11 +32,17 @@ class User(models.Model):
 class Topic(models.Model):
     content = models.CharField(max_length=50)
 
+    class Meta:
+        db_table = 'topics'
+        verbose_name = 'Topic'
+        verbose_name_plural = 'Topics'
+        ordering = ['id'] #오름차순 정렬
+
 class Letter(models.Model):
     #fk
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='letter_sender')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='letter_paper', null=True)
-    topics = models.ManyToManyField(Topic, relaed_name='letter_topics', null=True)
+    topics = models.ManyToManyField(Topic, related_name='letter_topics', blank=True)
     #받는 월 정하기
     MARCH = '3'
     JUNE = '6'
