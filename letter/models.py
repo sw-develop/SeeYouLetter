@@ -1,7 +1,6 @@
 import os
 
 from django.db import models
-
 from mysite import settings
 
 
