@@ -1,5 +1,6 @@
 from django.db import models
 from letter.models import Letter
+from pytz import timezone
 
 class Customer(models.Model):
     letter = models.OneToOneField(Letter, on_delete=models.CASCADE, primary_key=True)
