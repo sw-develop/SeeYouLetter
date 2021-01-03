@@ -40,9 +40,10 @@ class Topic(models.Model):
 class Letter(models.Model):
     #fk
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='letter_sender')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='letter_paper', null=True)
-    topics = models.ManyToManyField(Topic, related_name='letter_topics', blank=True)
+    paper = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='letter_paper', null=True)
+    SelectedQuestions = models.ManyToManyField(Topic, related_name='letter_topics', blank=True)
     #받는 월 정하기
+    """
     MARCH = '3'
     JUNE = '6'
     DECEMBER = '12'
@@ -51,18 +52,21 @@ class Letter(models.Model):
         (JUNE, 'June'),
         (DECEMBER, 'December'),
     ]
-    date = models.CharField(
+    month = models.CharField(
         max_length=2,
         choices=DATE_OF_RECEIVE_LETTER,
         default=MARCH,
     )
+    """
+    month = models.CharField(max_length=20, null=True)
     #font -> 여러 개 중 한 개 선택하는거로
+    font = models.CharField(max_length=20, null=True)
     letter_content = models.TextField(blank=True) #편지 본문 작성 글자 수 확인
     page = models.IntegerField(default=0, null=True)
     photo_price = models.IntegerField(default=0, null=True)
 
     def price_of_letter(self):
-        price = self.product.price + self.page*1000 + self.photo_price
+        price = self.paper.price + self.page*1000 + self.photo_price
         return price
 
     class Meta:

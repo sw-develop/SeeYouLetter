@@ -12,11 +12,11 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'senderEmail']
 
 class LetterSerializer(serializers.ModelSerializer):
-    #product = ProductSerializer(read_only=True)
+    products = ProductSerializer(read_only=True)
 
     class Meta:
         model = Letter
-        fields = ['id', 'product', 'user', 'topics', 'date', 'letter_content', 'page', 'photo_price']
+        fields = ['id', 'products', 'user', 'topics', 'date', 'letter_content', 'page', 'photo_price']
 
 class TopicSerializer(serializers.ModelSerializer):
     class Meta:
