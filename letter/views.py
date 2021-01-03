@@ -150,7 +150,7 @@ class LetterList(APIView):
                 쿠키 값 재설정 추가
             """
             id = int(request.COOKIES.get('userID'))
-            item = Letter.objects.filter(user=id).order_by('-pk').get()
+            item = Letter.objects.filter(user=id).latest() #맨 첫번째 object 반환
             response = Response(serializer.data, status=status.HTTP_201_CREATED)
             c_val = str(item.id)
             response.set_cookie('userID', c_val)
