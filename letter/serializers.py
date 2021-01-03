@@ -11,14 +11,15 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'senderEmail']
 
-class LetterSerializer(serializers.ModelSerializer):
-    #product = ProductSerializer(read_only=True)
-
-    class Meta:
-        model = Letter
-        fields = ['id', 'paper', 'user', 'SelectedQuestions', 'font', 'date', 'letter_content', 'page', 'photo_price']
-
 class TopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Topic
         fields = ['id', 'content']
+
+class LetterSerializer(serializers.ModelSerializer):
+    #product = ProductSerializer(read_only=True)
+    #SelectedQuestions = TopicSerializer(read_only=True)
+    class Meta:
+        model = Letter
+        fields = ['id', 'paper', 'user', 'SelectedQuestions', 'font', 'month', 'letter_content', 'page', 'photo_price']
+
