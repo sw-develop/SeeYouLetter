@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'order',
     'rest_framework',
     'corsheaders',
+    'django_jsonfield_backport',
 ]
 
 MIDDLEWARE = [
