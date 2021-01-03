@@ -1,14 +1,11 @@
 import os
 
 from django.db import models
-from mysite import settings
-
 
 class Product(models.Model):
     #편지지 이미지
     name = models.CharField(max_length=100) #한글 입력 글자 수 확인
     price = models.IntegerField()
-
     class Meta:
         db_table = 'products'
         verbose_name = 'Product'
@@ -38,28 +35,10 @@ class Topic(models.Model):
         ordering = ['id'] #오름차순 정렬
 
 class Letter(models.Model):
-    #fk
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='letter_sender')
     paper = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='letter_paper', null=True)
     SelectedQuestions = models.ManyToManyField(Topic, related_name='letter_topics', blank=True)
-    #받는 월 정하기
-    """
-    MARCH = '3'
-    JUNE = '6'
-    DECEMBER = '12'
-    DATE_OF_RECEIVE_LETTER = [
-        (MARCH, 'March'),
-        (JUNE, 'June'),
-        (DECEMBER, 'December'),
-    ]
-    month = models.CharField(
-        max_length=2,
-        choices=DATE_OF_RECEIVE_LETTER,
-        default=MARCH,
-    )
-    """
     month = models.CharField(max_length=20, null=True)
-    #font -> 여러 개 중 한 개 선택하는거로
     font = models.CharField(max_length=20, null=True)
     letter_content = models.TextField(blank=True) #편지 본문 작성 글자 수 확인
     page = models.IntegerField(default=0, null=True)
@@ -74,4 +53,5 @@ class Letter(models.Model):
         verbose_name = 'Letter'
         verbose_name_plural = 'Letters'
         ordering = ['id']  # 오름차순 정렬
+        get_latest_by = 'pk'
 
