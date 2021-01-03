@@ -6,19 +6,23 @@ class Customer(models.Model):
     letter = models.OneToOneField(Letter, on_delete=models.CASCADE, primary_key=True)
     senderName = models.CharField(max_length=30)
     senderPhone = models.CharField(max_length=14)
-    senderAddr = models.CharField(max_length=30)  # 우편번호랑 상세주소 다같이 저장되는건가?
+    senderFullAddress = models.CharField(max_length=50)
+    senderDetailedAddress = models.CharField(max_length=50)
+    senderZoneCode = models.IntegerField()
     receiver = models.CharField(max_length=30)
     receiverPhone = models.CharField(max_length=14)
-    receiverAddr = models.CharField(max_length=30)
+    receiverFullAddress = models.CharField(max_length=50)
+    receiverDetailedAddress = models.CharField(max_length=50)
+    receiverZoneCode = models.IntegerField()
     #우편방법
     MODE_OF_SEND_MAIL = [
-        ('regular', '일반우편'),
-        ('registered', '등기우편'),
+        ('a', '일반우편'),
+        ('b', '등기우편'),
     ]
     send_mail = models.CharField(
-        max_length=20,
+        max_length=5,
         choices=MODE_OF_SEND_MAIL,
-        default='regular',
+        default='a',
     )
 
     #개인정보동의
@@ -26,7 +30,7 @@ class Customer(models.Model):
 
     def price_of_mail(self):
         price = 0
-        if self.send_mail == 'registered':
+        if self.send_mail == 'b':
             price += 1000
         return price
 
