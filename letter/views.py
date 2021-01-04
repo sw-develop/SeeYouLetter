@@ -141,7 +141,15 @@ class LetterList(APIView):
         serializer = LetterSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            """
+                쿠키 값 재설정 추가
+            """
+            id = int(request.COOKIES.get('userID'))
+            item = Letter.objects.filter(user=id).latest() #맨 마지막 object 반환
+            response = Response(serializer.data, status=status.HTTP_201_CREATED)
+            c_val = str(item.id)
+            response.set_cookie('userID', c_val)
+            return response
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -165,15 +173,7 @@ class LetterDetail(APIView):
         serializer = LetterSerializer(letter, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            """
-                쿠키 값 재설정 추가
-            """
-            id = int(request.COOKIES.get('userID'))
-            item = Letter.objects.filter(user=id).latest() #맨 마지막 object 반환
-            response = Response(serializer.data, status=status.HTTP_201_CREATED)
-            c_val = str(item.id)
-            response.set_cookie('userID', c_val)
-            return response
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
