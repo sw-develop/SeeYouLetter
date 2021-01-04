@@ -19,11 +19,12 @@ class TopicSerializer(serializers.ModelSerializer):
 
 class LetterSerializer(serializers.ModelSerializer):
     #product = ProductSerializer(read_only=True)
-    SelectedQuestions = TopicSerializer(many=True)
+    #SelectedQuestions = TopicSerializer(many=True)
 
     class Meta:
         model = Letter
-        fields = ['id', 'paper', 'user', 'SelectedQuestions', 'font', 'month', 'letter_content', 'page', 'photo_price']
+        fields = ['id', 'paper', 'user', 'SelectedQuestions', 'font', 'month', 'letterContent', 'page', 'photo_price']
+
 
         @transaction.atomic
         def create(self, validated_data):
