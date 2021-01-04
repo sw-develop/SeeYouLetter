@@ -35,12 +35,12 @@ class Topic(models.Model):
         ordering = ['id'] #오름차순 정렬
 
 class Letter(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='letter_sender')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='letter_sender', null=True)
     paper = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='letter_paper', null=True)
     SelectedQuestions = models.ManyToManyField(Topic, related_name='letter_topics', blank=True)
     month = models.CharField(max_length=20, null=True)
     font = models.CharField(max_length=20, null=True)
-    letter_content = models.TextField(blank=True) #편지 본문 작성 글자 수 확인
+    letterContent = models.TextField(blank=True) #편지 본문 작성 글자 수 확인
     page = models.IntegerField(default=0, null=True)
     photo_price = models.IntegerField(default=0, null=True)
 
