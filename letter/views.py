@@ -142,13 +142,13 @@ class LetterList(APIView):
         if serializer.is_valid():
             serializer.save()
             """
-                쿠키 값 재설정 추가
+                letterID 쿠키 추가
             """
-            id = int(request.COOKIES.get('userID'))
+            id = request.data.get('user')
             item = Letter.objects.filter(user=id).latest() #맨 마지막 object 반환
             response = Response(serializer.data, status=status.HTTP_201_CREATED)
             c_val = str(item.id)
-            response.set_cookie('userID', c_val)
+            response.set_cookie('letterID', c_val)
             return response
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
