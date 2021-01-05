@@ -4,15 +4,15 @@ from pytz import timezone
 
 class Customer(models.Model):
     letter = models.OneToOneField(Letter, on_delete=models.CASCADE, primary_key=True)
-    senderName = models.CharField(max_length=30)
+    senderName = models.CharField(max_length=100)
     senderPhone = models.CharField(max_length=14)
-    senderFullAddress = models.CharField(max_length=50)
-    senderDetailedAddress = models.CharField(max_length=50)
+    senderFullAddress = models.CharField(max_length=100)
+    senderDetailedAddress = models.CharField(max_length=100)
     senderZoneCode = models.IntegerField()
-    receiver = models.CharField(max_length=30)
+    receiverName = models.CharField(max_length=100)
     receiverPhone = models.CharField(max_length=14)
-    receiverFullAddress = models.CharField(max_length=50)
-    receiverDetailedAddress = models.CharField(max_length=50)
+    receiverFullAddress = models.CharField(max_length=100)
+    receiverDetailedAddress = models.CharField(max_length=100)
     receiverZoneCode = models.IntegerField()
     #우편방법
     MODE_OF_SEND_MAIL = [
@@ -43,9 +43,10 @@ class Order(models.Model):
     customer = models.OneToOneField(Customer, on_delete=models.CASCADE, primary_key=True)
     letterName = models.CharField(max_length=100)
     letterPrice = models.IntegerField()
-    letterPage_count = models.IntegerField()
+    page_price = models.IntegerField()
     photo_price = models.IntegerField(null=True, default=0)
     postMethod = models.CharField(max_length=20, default='a')
+    postMethod_price = models.IntegerField
     total_price = models.IntegerField()
     created_date = models.DateTimeField(auto_now_add=True)
 
