@@ -46,7 +46,7 @@ class Order(models.Model):
     page_price = models.IntegerField()
     photo_price = models.IntegerField(null=True, default=0)
     postMethod = models.CharField(max_length=20, default='a')
-    postMethod_price = models.IntegerField
+    postMethod_price = models.IntegerField()
     total_price = models.IntegerField()
     created_date = models.DateTimeField(auto_now_add=True)
 
