@@ -19,7 +19,7 @@ class Customer(models.Model):
         ('a', '일반우편'),
         ('b', '등기우편'),
     ]
-    send_mail = models.CharField(
+    postMethod = models.CharField(
         max_length=5,
         choices=MODE_OF_SEND_MAIL,
         default='a',
@@ -30,7 +30,7 @@ class Customer(models.Model):
 
     def price_of_mail(self):
         price = 0
-        if self.send_mail == 'b':
+        if self.postMethod == 'b':
             price += 1000
         return price
 
@@ -45,7 +45,7 @@ class Order(models.Model):
     letterPrice = models.IntegerField()
     letterPage_count = models.IntegerField()
     photo_price = models.IntegerField(null=True, default=0)
-    send_mail = models.CharField(max_length=20, default='regular')
+    postMethod = models.CharField(max_length=20, default='a')
     total_price = models.IntegerField()
     created_date = models.DateTimeField(auto_now_add=True)
 
