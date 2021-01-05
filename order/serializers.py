@@ -5,7 +5,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ['letter', 'senderName', 'senderPhone', 'senderFullAddress', 'senderDetailedAddress', 'senderZoneCode', 'receiver', 'receiverPhone', 'receiverFullAddress', 'receiverDetailedAddress', 'receiverZoneCode', 'postMethod']
+        fields = ['letter', 'senderName', 'senderPhone', 'senderFullAddress', 'senderDetailedAddress', 'senderZoneCode', 'receiverName', 'receiverPhone', 'receiverFullAddress', 'receiverDetailedAddress', 'receiverZoneCode', 'postMethod']
 
 class OrderSerializer(serializers.ModelSerializer):
 
