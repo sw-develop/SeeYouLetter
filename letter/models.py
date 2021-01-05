@@ -45,7 +45,7 @@ class Letter(models.Model):
     photo_price = models.IntegerField(default=0, null=True)
 
     def price_of_letter(self):
-        price = self.paper.price + self.page*1000 + self.photo_price
+        price = self.paper.price + (self.page-2)*1000 + self.photo_price
         return price
 
     class Meta:
