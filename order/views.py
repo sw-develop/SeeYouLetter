@@ -27,15 +27,17 @@ class CustomerList(APIView):
                 customerObj = Customer.objects.get(pk=request.data.get('letter'))
                 letterObj = Letter.objects.get(pk=request.data.get('letter'))
                 prodObj = Product.objects.get(pk=letterObj.paper.id)
+                page_price = letterObj.price_of_page()
                 letter_price = letterObj.price_of_letter()
                 mail_price = customerObj.price_of_mail() #등기우편 시 1000원 추가
                 order = Order(
                     customer=customerObj,
                     letterName=prodObj.name,
                     letterPrice=prodObj.price,
-                    letterPage_count=letterObj.page,
+                    page_price=page_price,
                     photo_price=letterObj.photo_price,
                     postMethod=customerObj.postMethod,
+                    postMethod_price=mail_price,
                     total_price=letter_price+mail_price #최종가격
                 )
                 order.save()
