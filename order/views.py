@@ -26,7 +26,7 @@ class CustomerList(APIView):
             with transaction.atomic():
                 customerObj = Customer.objects.get(pk=request.data.get('letter'))
                 letterObj = Letter.objects.get(pk=request.data.get('letter'))
-                prodObj = Product.objects.get(pk=letterObj.product.id)
+                prodObj = Product.objects.get(pk=letterObj.paper.id)
                 letter_price = letterObj.price_of_letter()
                 mail_price = customerObj.price_of_mail() #등기우편 시 1000원 추가
                 order = Order(
@@ -35,7 +35,7 @@ class CustomerList(APIView):
                     letterPrice=prodObj.price,
                     letterPage_count=letterObj.page,
                     photo_price=letterObj.photo_price,
-                    send_mail=customerObj.send_mail,
+                    postMethod=customerObj.postMethod,
                     total_price=letter_price+mail_price #최종가격
                 )
                 order.save()
