@@ -27,6 +27,9 @@ class PhotoList(APIView):
                 letterObj=Letter.objects.get(pk=request.data.get('letter'))
                 letterObj.photo_price += 1000
                 letterObj.save()
+                id=request.data.get('letter')
+                item=Photo.objects.filter(letter=id).latest()
+                item.get_remote_image()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
