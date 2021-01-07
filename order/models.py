@@ -5,14 +5,14 @@ from pytz import timezone
 class Customer(models.Model):
     letter = models.OneToOneField(Letter, on_delete=models.CASCADE, primary_key=True)
     senderName = models.CharField(max_length=100)
-    senderPhone = models.CharField(max_length=14)
-    senderFullAddress = models.CharField(max_length=100)
-    senderDetailedAddress = models.CharField(max_length=100)
+    senderPhone = models.CharField(max_length=20)
+    senderFullAddress = models.CharField(max_length=200)
+    senderDetailedAddress = models.CharField(max_length=200)
     senderZoneCode = models.IntegerField()
     receiverName = models.CharField(max_length=100)
-    receiverPhone = models.CharField(max_length=14)
-    receiverFullAddress = models.CharField(max_length=100)
-    receiverDetailedAddress = models.CharField(max_length=100)
+    receiverPhone = models.CharField(max_length=20)
+    receiverFullAddress = models.CharField(max_length=200)
+    receiverDetailedAddress = models.CharField(max_length=200)
     receiverZoneCode = models.IntegerField()
     #우편방법
     MODE_OF_SEND_MAIL = [
