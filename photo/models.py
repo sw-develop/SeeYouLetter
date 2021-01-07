@@ -10,7 +10,7 @@ from mysite import settings
 
 class Photo(models.Model):
     letter = models.ForeignKey(Letter, on_delete=models.CASCADE, related_name='user_photos')
-    photo = models.ImageField(upload_to='photos/%Y/%m/%d')
+    photo = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True)
     image_url = models.URLField(null=True)
 
     def delete(self, *args, **kargs):
