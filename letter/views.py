@@ -181,6 +181,7 @@ class LetterDetail(APIView):
         serializer = LetterSerializer(letter, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
+            #serializer = LetterSerializer(letter)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
