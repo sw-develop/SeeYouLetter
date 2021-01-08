@@ -22,7 +22,7 @@ class LetterAdmin(admin.ModelAdmin):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
-        'id'
+        'id',
         'name',
         'price'
     )
