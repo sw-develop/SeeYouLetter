@@ -148,7 +148,7 @@ class LetterList(APIView):
             item = Letter.objects.filter(user=id).latest() #맨 마지막 object 반환
             response = Response(serializer.data, status=status.HTTP_201_CREATED)
             c_val = str(item.id)
-            response.set_cookie('letterID', c_val, max_age=60*60*24)
+            response.set_cookie('letterID', c_val, max_age=60*60*24*2)
             return response
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
