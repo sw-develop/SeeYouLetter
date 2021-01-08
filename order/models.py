@@ -28,6 +28,9 @@ class Customer(models.Model):
     #개인정보동의
     #환불정책동의
 
+    def __str__(self):
+        return '{}'.format(self.letter)
+
     def price_of_mail(self):
         price = 0
         if self.postMethod == 'b':
@@ -49,6 +52,9 @@ class Order(models.Model):
     postMethod_price = models.IntegerField()
     total_price = models.IntegerField()
     created_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '{}'.format(self.customer)
 
     class Meta:
         db_table = 'orders'
