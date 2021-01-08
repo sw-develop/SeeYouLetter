@@ -6,6 +6,10 @@ class Product(models.Model):
     #편지지 이미지
     name = models.CharField(max_length=100) #한글 입력 글자 수 확인
     price = models.IntegerField()
+
+    def __str__(self):
+        return 'name : {}'.format(self.name)
+
     class Meta:
         db_table = 'products'
         verbose_name = 'Product'
@@ -18,6 +22,9 @@ class User(models.Model):
         verbose_name='email',
         max_length=255,
     )
+
+    def __str__(self):
+        return 'email : {}'.format(self.senderEmail)
 
     class Meta:
         db_table = 'users'
@@ -43,6 +50,9 @@ class Letter(models.Model):
     letterContent = models.TextField(blank=True) #편지 본문 작성 글자 수 확인
     page = models.IntegerField(default=0, null=True)
     photo_price = models.IntegerField(default=0, null=True)
+
+    def __str__(self):
+        return 'user : {} letter : {}'.format(self.user, self.id)
 
     def price_of_page(self):
         price = (self.page-2)*1000
