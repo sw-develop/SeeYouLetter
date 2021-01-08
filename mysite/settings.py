@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'order',
     'rest_framework',
     'corsheaders',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -134,6 +135,17 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #각 media file에 대한 url prefix
 MEDIA_URL = '/media/'
 
+#aws s3
+AWS_ACCESS_KEY_ID = secrets['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = secrets['AWS_SECRET_ACCESS_KEY']
 
+AWS_REGION = 'ap-northeast-2'
+AWS_STORAGE_BUCKET_NAME = 'syletter'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME, AWS_REGION)
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl' : 'max-age=86400',
+}
+
+DEFAULT_FILE_STORAGE = 'mysite.asset_storage.MediaStorage'
 
 
