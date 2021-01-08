@@ -31,5 +31,6 @@ class Photo(models.Model):
         verbose_name = 'Photo'
         verbose_name_plural = 'Photos'
         get_latest_by = 'pk'
+        ordering =['id']
 
 
