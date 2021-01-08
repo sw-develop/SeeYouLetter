@@ -52,7 +52,7 @@ class Letter(models.Model):
     photo_price = models.IntegerField(default=0, null=True)
 
     def __str__(self):
-        return 'user : {} letter : {}'.format(self.user, self.id)
+        return '{}, letter : {}'.format(self.user, self.id)
 
     def price_of_page(self):
         price = (self.page-2)*1000
