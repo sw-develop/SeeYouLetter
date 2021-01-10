@@ -15,6 +15,7 @@ from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT_DIR = os.path.dirname(BASE_DIR)
 
 with open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'secrets.json'), 'rb') as secret_file:
     secrets = json.load(secret_file)
@@ -129,6 +130,8 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, '.static_root')
+
 
 #미디어 파일을 관리할 루트 media 디렉토리
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
