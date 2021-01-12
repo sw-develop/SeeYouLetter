@@ -7,12 +7,16 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.db import transaction
+#from .permissions import IsSuperUser
 
 # Create your views here.
 class CustomerList(APIView):
     """
     List all Customer or create a new Customer
     """
+
+    #permission_classes = [IsSuperUser]
+
     def get(self, request, format=None):
         customers = Customer.objects.all()
         serializer = CustomerSerializer(customers, many=True)
@@ -49,6 +53,9 @@ class CustomerDetail(APIView):
     """
     Retrieve, update or delete a Customer instance
     """
+
+    #permission_classes = [IsSuperUser]
+
     def get_object(self, pk):
         try:
             return Customer.objects.get(pk=pk)
@@ -77,6 +84,9 @@ class OrderList(APIView):
     """
     List all Order or create a new Order
     """
+
+    #permission_classes = [IsSuperUser]
+
     def get(self, request, format=None):
         orders = Order.objects.all()
         serializer = OrderSerializer(orders, many=True)
@@ -94,6 +104,9 @@ class OrderDetail(APIView):
     """
     Retrieve, update or delete a Order instance
     """
+
+    #permission_classes = [IsSuperUser]
+
     def get_object(self, pk):
         try:
             return Order.objects.get(pk=pk)
