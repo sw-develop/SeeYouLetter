@@ -4,16 +4,16 @@ from pytz import timezone
 
 class Customer(models.Model):
     letter = models.OneToOneField(Letter, on_delete=models.CASCADE, primary_key=True)
-    senderName = models.CharField(max_length=100)
-    senderPhone = models.CharField(max_length=20)
-    senderFullAddress = models.CharField(max_length=200)
-    senderDetailedAddress = models.CharField(max_length=200)
-    senderZoneCode = models.IntegerField()
-    receiverName = models.CharField(max_length=100)
-    receiverPhone = models.CharField(max_length=20)
-    receiverFullAddress = models.CharField(max_length=200)
-    receiverDetailedAddress = models.CharField(max_length=200)
-    receiverZoneCode = models.IntegerField()
+    senderName = models.CharField(max_length=100, null=True)
+    senderPhone = models.CharField(max_length=20, null=True)
+    senderFullAddress = models.CharField(max_length=200, null=True)
+    senderDetailedAddress = models.CharField(max_length=200, null=True)
+    senderZoneCode = models.IntegerField(null=True)
+    receiverName = models.CharField(max_length=100, null=True)
+    receiverPhone = models.CharField(max_length=20, null=True)
+    receiverFullAddress = models.CharField(max_length=200, null=True)
+    receiverDetailedAddress = models.CharField(max_length=200, null=True)
+    receiverZoneCode = models.IntegerField(null=True)
     #우편방법
     MODE_OF_SEND_MAIL = [
         ('a', '일반우편'),
@@ -32,7 +32,7 @@ class Customer(models.Model):
         return '{}'.format(self.letter)
 
     def price_of_mail(self):
-        price = 0
+        price = 1500
         if self.postMethod == 'b':
             price += 1000
         return price

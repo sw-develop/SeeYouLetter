@@ -8,12 +8,15 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
+#from .permissions import IsSuperUser
 
 # Create your views here.
 class ProductList(APIView):
     """
     List all Product or create a new Product
     """
+    #permission_classes = [IsSuperUser]
+
     def get(self, request, format=None):
         products = Product.objects.all()
         serializer = ProductSerializer(products, many=True)
@@ -30,6 +33,8 @@ class ProductDetail(APIView):
     """
     Retrieve, update or delete a Product instance
     """
+    #permission_classes = [IsSuperUser]
+
     def get_object(self, pk):
         try:
             return Product.objects.get(pk=pk)
@@ -58,6 +63,8 @@ class UserList(APIView):
     """
     List all User or create a new User
     """
+    #permission_classes = [IsSuperUser]
+
     def get(self, request, format=None):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
@@ -104,6 +111,9 @@ class UserDetail(APIView):
     """
     Retrieve, update or delete a User instance
     """
+
+    #permission_classes = [IsSuperUser]
+
     def get_object(self, pk):
         try:
             return User.objects.get(pk=pk)
@@ -132,6 +142,9 @@ class LetterList(APIView):
     """
     List all Letter or create a new Letter
     """
+
+    #permission_classes = [IsSuperUser]
+
     def get(self, request, format=None):
         letters = Letter.objects.all()
         serializer = LetterSerializer(letters, many=True)
@@ -157,6 +170,9 @@ class LetterDetail(APIView):
     """
     Retrieve, update or delete a Letter instance
     """
+
+    #permission_classes = [IsSuperUser]
+
     def get_object(self, pk):
         try:
             return Letter.objects.get(pk=pk)
